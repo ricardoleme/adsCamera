@@ -30,10 +30,10 @@ export default function App() {
   useEffect(() => {
     (async () => {
       if (Platform.OS === 'web') {
-        const cameraDisponível = await Camera.isAvailableAsync()
-        setTemPermissao(!cameraDisponível)
+        const tiposCameraWeb = await Camera.getAvailableCameraTypesAsync() // retorna [front, back]
+        setTemPermissao(tiposCameraWeb.length === 0 ? null : true)
       } else {
-        const { status } = await Camera.requestPermissionsAsync();
+        const { status } = await Camera.requestPermissionsAsync()
         setTemPermissao(status === 'granted')
       }
     })()
@@ -51,12 +51,10 @@ export default function App() {
     }
   }, [])
 
-  if (temPermissao === false) {
-    return <Text>Acesso negado à câmera ou o dispositivo não dispõem de uma</Text>
-  }
 
-  async function tirarFoto(){
-    if(cameraRef) {
+
+  async function tirarFoto() {
+    if (cameraRef) {
       const options = {
         quality: 0.5,
         skipProcessing: true,
@@ -67,9 +65,24 @@ export default function App() {
     }
   }
 
+  if (temPermissao === null) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <Cabecalho titulo="📸 Dispositivo sem câmera" />
+      </SafeAreaView>
+    )
+  }
+  if (temPermissao === false) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <Cabecalho titulo="🚫 Sem acesso à câmera" />
+      </SafeAreaView>
+    )
+  }
+
   return (
     <SafeAreaView style={styles.container}>
-      <Cabecalho titulo="ADS Câmera" />
+      <Cabecalho titulo={`ADS Câmera ${temPermissao}`} />
       <Camera
         style={{ flex: 1 }}
         type={tipoCamera}
@@ -116,6 +129,7 @@ export default function App() {
       </Camera>
     </SafeAreaView>
   )
+
 }
 
 const styles = StyleSheet.create({
