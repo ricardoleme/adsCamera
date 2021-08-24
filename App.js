@@ -70,7 +70,7 @@ export default function App() {
   if (temPermissao === false) {
     return (
       <SafeAreaView style={styles.container}>
-        <Cabecalho titulo="🚫 Sem acesso à câmera" />
+        <Cabecalho titulo="🚫📸 Sem acesso à câmera" />
       </SafeAreaView>
     )
   }
