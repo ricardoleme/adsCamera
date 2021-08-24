@@ -29,18 +29,13 @@ export default function App() {
 
   useEffect(() => {
     (async () => {
-      if (Platform.OS === 'web') {
-        const tiposCameraWeb = await Camera.getAvailableCameraTypesAsync() // retorna [front, back]
-        setTemPermissao(tiposCameraWeb.length === 0 ? null : true)
-      } else {
-        const { status } = await Camera.requestPermissionsAsync()
+        const { status } = await Permissions.askAsync(Permissions.CAMERA)
         setTemPermissao(status === 'granted')
-      }
     })()
   }, [])
 
   useEffect(() => {
-    //dependendo do SO, exibiremos diferentes ícones
+    //dependendo do SO, exibiremos diferentes ícone
     switch (Platform.OS) {
       case 'android':
         setIconePadrao('md')
