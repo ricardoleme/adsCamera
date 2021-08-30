@@ -44,7 +44,8 @@ export default function App() {
       //solicita a permissão para a galeria de imagens
       const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL)
       setTemPermissaoGaleria(status === 'granted')
-    })
+    })()
+    
   }, [])
 
   useEffect(() => {
