@@ -46,10 +46,14 @@ export default function App() {
     }
   }, [])
 
-
+async function obterResolucoes(){
+  let resolucoes = await cameraRef.current.getAvailablePictureSizeAsync("16:9")
+  console.log("Resoluções suportadas:" + JSON.stringify(resolucoes))
+}
 
   async function tirarFoto() {
     if (cameraRef) {
+      await obterResolucoes()
       const options = {
         quality: 0.5,
         skipProcessing: true,
@@ -77,7 +81,7 @@ export default function App() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Cabecalho titulo={`ADS Câmera ${temPermissao}`} />
+      <Cabecalho titulo="ADS Câmera" />
       <Camera
         style={{ flex: 1 }}
         type={tipoCamera}
