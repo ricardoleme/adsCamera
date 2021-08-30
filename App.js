@@ -6,7 +6,8 @@ import {
   StyleSheet,
   TouchableOpacity,
   Platform,
-  Alert
+  Alert,
+  Modal
 } from 'react-native'
 
 import { Camera } from 'expo-camera'
