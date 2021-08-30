@@ -23,6 +23,7 @@ export default function App() {
   const cameraRef = useRef(null)
   //status do acesso à câmera
   const [temPermissao, setTemPermissao] = useState(null)
+  const [temPermissaoGaleria, setTemPermissaoGaleria] = useState(null)
   const [iconePadrao, setIconePadrao] = useState('md')
   //tipo inicial da câmera (front ou back)
   const [tipoCamera, setTipoCamera] = useState(Camera.Constants.Type.back)
@@ -35,9 +36,15 @@ export default function App() {
 
   useEffect(() => {
     (async () => {
-        const { status } = await Permissions.askAsync(Permissions.CAMERA)
-        setTemPermissao(status === 'granted')
+      const { status } = await Permissions.askAsync(Permissions.CAMERA)
+      setTemPermissao(status === 'granted')
     })()
+
+    (async () => {
+      //solicita a permissão para a galeria de imagens
+      const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL)
+      setTemPermissaoGaleria(status === 'granted')
+    })
   }, [])
 
   useEffect(() => {
@@ -52,14 +59,24 @@ export default function App() {
     }
   }, [])
 
-async function obterResolucoes(){
-  let resolucoes = await cameraRef.current.getAvailablePictureSizesAsync("16:9")
-  console.log("Resoluções suportadas:" + JSON.stringify(resolucoes))
-  if(resolucoes && resolucoes.length && resolucoes.length > 0) {
-    console.log(`Maior qualidade: ${resolucoes[resolucoes.length - 1]}`)
-    console.log(`Menor qualidade: ${resolucoes[0]}`)
+  async function obterResolucoes() {
+    let resolucoes = await cameraRef.current.getAvailablePictureSizesAsync("16:9")
+    console.log("Resoluções suportadas:" + JSON.stringify(resolucoes))
+    if (resolucoes && resolucoes.length && resolucoes.length > 0) {
+      console.log(`Maior qualidade: ${resolucoes[resolucoes.length - 1]}`)
+      console.log(`Menor qualidade: ${resolucoes[0]}`)
+    }
   }
-}
+
+  async function salvaFoto(){
+    if (temPermissaoGaleria){
+        setExibeModalFoto(false)
+        const asset = await MediaLibrary.createAssetAsync(fotoCapturada)
+        await MediaLibrary.createAlbumAsync('AdsCamera', asset, false)
+    } else {
+      Alert.alert('Sem permissão', 'App não possui acesso a galeria!')
+    }
+  }
 
   async function tirarFoto() {
     if (cameraRef) {
@@ -83,7 +100,7 @@ async function obterResolucoes(){
           Alert.alert('Imagem Capturada', msg)
           break
         case 'web':
-          alert(msg)  
+          alert(msg)
       }
     }
   }
@@ -150,31 +167,31 @@ async function obterResolucoes(){
           </TouchableOpacity>
         </View>
       </Camera>
-<Modal animationType="slide" transparente={true} visible={exibeModalFoto}>
-  <View style={styles.modalView}>
-     <View style={{ flexDirection: 'row-reverse'}}>
-       <TouchableOpacity style={{margin:2}}
-       onPress={() => {
-         setExibeModalFoto(false)
-        }}
-        accessible={true}
-        accessibilityLabel="Fechar"
-        accessibilityHint="Fecha a janela atual"
-        >
-          <Ionicons name={`${iconePadrao}-close-circle`} size={40} color="#D9534F" />
-        </TouchableOpacity>
-        <TouchableOpacity style={{margin:2}}
-        onPress={salvaFoto}>
-          <Ionicons name={`${iconePadrao}-cloud-upload`} size={40} color="#121212" />
-        </TouchableOpacity>
-     </View>
-     <Image source={{uri: fotoCapturada}}
-            style={{width: '90%', height:'70%', borderRadius: 20}}
+      {fotoCapturada &&
+      <Modal animationType="slide" transparente={true} visible={exibeModalFoto}>
+        <View style={styles.modalView}>
+          <View style={{ flexDirection: 'row-reverse' }}>
+            <TouchableOpacity style={{ margin: 2 }}
+              onPress={() => {
+                setExibeModalFoto(false)
+              }}
+              accessible={true}
+              accessibilityLabel="Fechar"
+              accessibilityHint="Fecha a janela atual"
+            >
+              <Ionicons name={`${iconePadrao}-close-circle`} size={40} color="#D9534F" />
+            </TouchableOpacity>
+            <TouchableOpacity style={{ margin: 2 }}
+              onPress={salvaFoto}>
+              <Ionicons name={`${iconePadrao}-cloud-upload`} size={40} color="#121212" />
+            </TouchableOpacity>
+          </View>
+          <Image source={{ uri: fotoCapturada }}
+            style={{ width: '90%', height: '70%', borderRadius: 20 }}
           />
-  </View>
-
-</Modal>
-
+        </View>
+      </Modal>
+     }
     </SafeAreaView>
   )
 
