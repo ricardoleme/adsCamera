@@ -7,7 +7,8 @@ import {
   TouchableOpacity,
   Platform,
   Alert,
-  Modal
+  Modal,
+  Image
 } from 'react-native'
 
 import { Camera } from 'expo-camera'
@@ -162,7 +163,14 @@ async function obterResolucoes(){
         >
           <Ionicons name={`${iconePadrao}-close-circle`} size={40} color="#D9534F" />
         </TouchableOpacity>
+        <TouchableOpacity style={{margin:2}}
+        onPress={salvaFoto}>
+          <Ionicons name={`${iconePadrao}-cloud-upload`} size={40} color="#121212" />
+        </TouchableOpacity>
      </View>
+     <Image source={{uri: fotoCapturada}}
+            style={{width: '90%', height:'70%', borderRadius: 20}}
+          />
   </View>
 
 </Modal>
