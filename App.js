@@ -148,12 +148,38 @@ async function obterResolucoes(){
           </TouchableOpacity>
         </View>
       </Camera>
+<Modal animationType="slide" transparente={true} visible={exibeModalFoto}>
+  <View style={styles.modalView}>
+     <View style={{ flexDirection: 'row-reverse'}}>
+       <TouchableOpacity style={{margin:2}}
+       onPress={() => {
+         setExibeModalFoto(false)
+        }}
+        accessible={true}
+        accessibilityLabel="Fechar"
+        accessibilityHint="Fecha a janela atual"
+        >
+          <Ionicons name={`${iconePadrao}-close-circle`} size={40} color="#D9534F" />
+        </TouchableOpacity>
+     </View>
+  </View>
+
+</Modal>
+
     </SafeAreaView>
   )
 
 }
 
 const styles = StyleSheet.create({
+  modalView: {
+    margin: 10,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 15,
+    opacity: 0.95,
+    alignItems: "center"
+  },
   container: {
     flex: 1,
     justifyContent: 'center'
