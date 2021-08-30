@@ -47,7 +47,7 @@ export default function App() {
   }, [])
 
 async function obterResolucoes(){
-  let resolucoes = await cameraRef.current.getAvailablePictureSizeAsync("16:9")
+  let resolucoes = await cameraRef.current.getAvailablePictureSizesAsync("16:9")
   console.log("Resoluções suportadas:" + JSON.stringify(resolucoes))
 }
 
