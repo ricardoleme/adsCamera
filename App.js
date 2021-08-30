@@ -26,6 +26,10 @@ export default function App() {
   const [tipoCamera, setTipoCamera] = useState(Camera.Constants.Type.back)
   //status inicial do flash
   const [tipoFlash, setTipoFlash] = useState(Camera.Constants.FlashMode.off)
+  //controle de exibicao do Modal da foto
+  const [exibeModalFoto, setExibeModalFoto] = useState(false)
+  //referencia à foto capturada
+  const [fotoCapturada, setFotoCapturada] = useState(null)
 
   useEffect(() => {
     (async () => {
@@ -49,6 +53,10 @@ export default function App() {
 async function obterResolucoes(){
   let resolucoes = await cameraRef.current.getAvailablePictureSizesAsync("16:9")
   console.log("Resoluções suportadas:" + JSON.stringify(resolucoes))
+  if(resolucoes && resolucoes.length && resolucoes.length > 0) {
+    console.log(`Maior qualidade: ${resolucoes[resolucoes.length - 1]}`)
+    console.log(`Menor qualidade: ${resolucoes[0]}`)
+  }
 }
 
   async function tirarFoto() {
@@ -60,7 +68,21 @@ async function obterResolucoes(){
         base64: true
       }
       const foto = await cameraRef.current.takePictureAsync(options)
-      console.log(foto.uri)
+      setFotoCapturada(foto.uri)
+      setExibeModalFoto(true)
+
+      let msg = "Foto tirada com sucesso!"
+
+      switch (Platform.OS) {
+        case 'android':
+          Alert.alert('Imagem Capturada', msg)
+          break
+        case 'ios':
+          Alert.alert('Imagem Capturada', msg)
+          break
+        case 'web':
+          alert(msg)  
+      }
     }
   }
 
