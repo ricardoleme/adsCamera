@@ -20,15 +20,15 @@ $ expo start
 
 ## Instalação via clone
 
-O projeto necessita do [node.js] para rodar.
+O projeto necessita do [Expo] para rodar.
 
 Instale as dependências e devDependências e inicie o servidor
 
 ```sh
 $ git clone https://github.com/ricardoleme/adsCamera
-$ cd expo-camera
-$ npm install -d
-$ node app
+$ cd adsCamera
+$ npm i
+$ expo start
 ```
 ## Gerando a APK para o Android 
 
@@ -37,11 +37,11 @@ $ node app
 
 ```sh
 "ios": {
-      "bundleIdentifier": "br.edu.fatecitu.expocam",
+      "bundleIdentifier": "br.edu.fatecitu.adsCamera",
       "buildNumber": "1.0.0"
     },
 "android": {
-      "package": "br.edu.fatecitu.expocam",
+      "package": "br.edu.fatecitu.adsCamera",
       "versionCode": 1
     },
 ```
@@ -51,13 +51,11 @@ $ expo build:android -t apk
 ```
 License
 ----
-
 MIT
 
 
-**Software Livre é vida!🐧**
+**Software Livre é vida! :brazil:🐧**
 
 
 
-   [node.js]: <http://nodejs.org>
    [Expo]: <https://expo.io/signup>
