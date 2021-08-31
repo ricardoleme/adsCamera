@@ -2,21 +2,23 @@ import React, { useState, useEffect, useRef } from 'react'
 import {
   SafeAreaView,
   View,
-  Text,
   StyleSheet,
   TouchableOpacity,
   Platform,
   Alert,
   Modal,
-  Image
+  Image,
+  ToastAndroid
 } from 'react-native'
 
 import { Camera } from 'expo-camera'
-import * as Permissions from 'expo-permissions'
 import * as MediaLibrary from 'expo-media-library'
 import { Ionicons } from '@expo/vector-icons'
 
 import Cabecalho from './components/Cabecalho'
+
+// Firefox 1.0+
+const isFirefox = typeof InstallTrigger !== 'undefined';
 
 export default function App() {
   //referência da câmera
@@ -36,16 +38,19 @@ export default function App() {
 
   useEffect(() => {
     (async () => {
-      const { status } = await Permissions.askAsync(Permissions.CAMERA)
+      const { status } = await Camera.requestPermissionsAsync()
       setTemPermissao(status === 'granted')
-    })()
-
+    })();
+    
+    if(isFirefox){
+      alert('Este app não roda no seu navegador 🙀🦊')
+    } else {
     (async () => {
       //solicita a permissão para a galeria de imagens
-      const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL)
+      const { status } = await MediaLibrary.requestPermissionsAsync()
       setTemPermissaoGaleria(status === 'granted')
     })()
-    
+  }
   }, [])
 
   useEffect(() => {
@@ -95,7 +100,11 @@ export default function App() {
 
       switch (Platform.OS) {
         case 'android':
-          Alert.alert('Imagem Capturada', msg)
+          ToastAndroid.showWithGravity(
+            msg,
+            ToastAndroid.LONG,
+            ToastAndroid.CENTER
+          )
           break
         case 'ios':
           Alert.alert('Imagem Capturada', msg)
@@ -188,7 +197,7 @@ export default function App() {
             </TouchableOpacity>
           </View>
           <Image source={{ uri: fotoCapturada }}
-            style={{ width: '90%', height: '70%', borderRadius: 20 }}
+            style={{ width: '90%', height: '90%',  resizeMode: 'cover', borderRadius: 20 }}
           />
         </View>
       </Modal>
@@ -200,10 +209,10 @@ export default function App() {
 
 const styles = StyleSheet.create({
   modalView: {
-    margin: 10,
-    backgroundColor: "white",
+    margin: 4,
+    backgroundColor: "transparent",
     borderRadius: 20,
-    padding: 15,
+    padding: 4,
     opacity: 0.95,
     alignItems: "center"
   },
