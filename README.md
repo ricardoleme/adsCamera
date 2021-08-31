@@ -2,6 +2,9 @@
 Exemplo em React Native (Expo) utilizando a API da Câmera. (Curso de Análise e Desenvolvimento de Sistemas da Fatec Itu) <br/>
 *Example in React Native (Expo) using the Camera API. (Fatec Itu (small city in Brazil) - Systems Analysis and Development Course)* 
 
+## Demo
+Veja o demo aqui: (*You can see here:*)
+<https://expo.dev/@ricardoleme/expo-camera>
 
 ## Primeiros passos
 
@@ -59,3 +62,4 @@ MIT
 
 
    [Expo]: <https://expo.io/signup>
+   [Demo]: <https://expo.dev/@ricardoleme/expo-camera>
