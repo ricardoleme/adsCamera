@@ -1,6 +1,6 @@
 # Expo Camera
 Exemplo em React Native (Expo) utilizando a API da Câmera. (Curso de Análise e Desenvolvimento de Sistemas da Fatec Itu)
-*Example in React Native (Expo) using the Camera API. (Fatec Itu Systems Analysis and Development Course)* 
+  *Example in React Native (Expo) using the Camera API. (Fatec Itu Systems Analysis and Development Course)* 
 
 
 ## Primeiros passos
