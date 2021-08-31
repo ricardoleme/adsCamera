@@ -1,5 +1,6 @@
 # Expo Camera
-Exemplo em React Native (Expo) utilizando a API da Câmera.
+Exemplo em React Native (Expo) utilizando a API da Câmera. (Curso de Análise e Desenvolvimento de Sistemas da Fatec Itu)
+*Example in React Native (Expo) using the Camera API. (Fatec Itu Systems Analysis and Development Course)* 
 
 
 ## Primeiros passos
@@ -13,7 +14,6 @@ $ npm install -g expo-cli
 $ expo init expocam
 $ cd expocam
 $ expo install expo-camera
-$ expo install expo-permissions
 $ expo install expo-media-library
 $ expo start
 ```
@@ -25,7 +25,7 @@ O projeto necessita do [node.js] para rodar.
 Instale as dependências e devDependências e inicie o servidor
 
 ```sh
-$ git clone https://github.com/ricardoleme/expo-camera
+$ git clone https://github.com/ricardoleme/adsCamera
 $ cd expo-camera
 $ npm install -d
 $ node app
